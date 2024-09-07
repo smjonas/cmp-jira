@@ -52,7 +52,7 @@ end
 
 M.get_jql = function(config)
     local username = M.get_username(config)
-    return string.format(config.jira.jql, username)
+    return config.jira.jql:gsub("%%s", username)
 end
 
 M.get_jira_url = function(config)
