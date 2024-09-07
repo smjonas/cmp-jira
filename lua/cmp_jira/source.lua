@@ -21,6 +21,7 @@ source.new = function(overrides)
   for _, item in ipairs(self.config.filetypes) do
     self.filetypes[item] = true
   end
+  self.enabled = self.config.enabled
 
   -- defaults
   if self.config.jira.jql == nil or self.config.jira.jql == "" then
@@ -31,7 +32,10 @@ source.new = function(overrides)
 end
 
 function source:is_available()
-  return self.filetypes["*"] ~= nil or self.filetypes[vim.bo.filetype] ~= nil
+  if self.filetypes["*"] == nil and self.filetypes[vim.bo.filetype] == nil then
+    return false
+  end
+  return self.enabled == true or self.enabled()
 end
 
 function source:complete(_, callback)

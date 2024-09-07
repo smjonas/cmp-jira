@@ -1,4 +1,5 @@
 local M = {
+    enabled = true,
     filetypes = { 'gitcommit' },
     jira = {
         url = '',
