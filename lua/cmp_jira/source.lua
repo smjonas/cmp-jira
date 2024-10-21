@@ -72,7 +72,8 @@ function source:complete(_, callback)
               label = label,
               filterText = label,
               insertText = label,
-              sortText = issue.key
+              sortText = issue.key,
+              description = issue.description,
             }
           )
         end
@@ -87,6 +88,18 @@ function source:complete(_, callback)
   )
 
   return false
+end
+
+function source:resolve(completion_item, callback)
+  local desc = completion_item.description
+  if desc ~= vim.NIL then
+    desc = desc:gsub("{{", "`"):gsub("}}", "`")
+  end
+  completion_item.documentation = {
+    kind = cmp.lsp.MarkupKind.Markdown,
+    value = desc,
+  }
+  callback(completion_item)
 end
 
 function source:get_debug_name()

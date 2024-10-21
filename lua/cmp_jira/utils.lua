@@ -27,6 +27,7 @@ M.parse_api_response = function(response)
        table.insert(issues, {
            key = issue.key,
            summary = summary_val,
+           description = issue.fields.description,
        })
     end
 
@@ -47,7 +48,7 @@ end
 M.get_request_url = function(config)
     local url = M.get_jira_url(config)
     local jql = M.get_jql(config)
-    return string.format('%s/rest/api/2/search?fields=summary&jql=', url) ..  jql
+    return string.format('%s/rest/api/2/search?fields=summary,description&jql=', url) ..  jql
 end
 
 M.get_jql = function(config)
