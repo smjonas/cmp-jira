@@ -65,12 +65,13 @@ function source:complete(_, callback)
 
         local items = {}
         for _, issue in ipairs(parsed_issues) do
+          local label = string.format("%s: %s", issue.key, issue.summary)
           table.insert(
             items,
             {
-              label = string.format("%s: %s", issue.key, issue.summary),
-              filterText = string.format("%s: %s", issue.key, issue.summary),
-              insertText = issue.key,
+              label = label,
+              filterText = label,
+              insertText = label,
               sortText = issue.key
             }
           )
